@@ -38,6 +38,10 @@ loop do
     case event
       when Rubygame::QuitEvent
         exit
+      #when Rubygame::KeyDownEvent
+      # case event.key
+      # when Rubygame::K_F1
+      #    FIXME Rubygame does not yet support fullscreen toggle inately
     end
   end
 
@@ -60,7 +64,6 @@ loop do
         GL::Vertex  1,-1,0
         GL::Vertex -1,-1,0
   GL::End()
-
 
   Rubygame::GL.swap_buffers
 end
