@@ -2,7 +2,7 @@
 require 'rubygame'
 require 'opengl'
 
-require '../nehe'
+require 'basecode/nehe'
 
 class Lesson05 < Display
 
