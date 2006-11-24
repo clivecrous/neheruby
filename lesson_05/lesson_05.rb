@@ -2,133 +2,107 @@
 require 'rubygame'
 require 'opengl'
 
-WIDTH = 400
-HEIGHT = 300
+require '../nehe'
 
-Rubygame.init
+class Lesson05 < Display
 
-# Setup screen
+  def initialize width, height
+    super width, height, "Lesson 5"
 
-screen = Rubygame::Screen.set_mode [WIDTH,HEIGHT], 32,
-  Rubygame::HWSURFACE|Rubygame::OPENGL
-
-screen.set_caption "neheruby - Lesson 5"
-
-# Setup initial OpenGL
-
-GL::Viewport 0, 0, WIDTH, HEIGHT
-
-GL::MatrixMode GL::PROJECTION
-GL::LoadIdentity()
-GLU::Perspective 45, WIDTH/(HEIGHT.to_f), 3, 10
-
-GL::MatrixMode GL::MODELVIEW
-GL::LoadIdentity()
-
-GL::Enable GL::DEPTH_TEST
-GL::DepthFunc GL::LESS
-
-# Rotation variables
-
-$rrti = 0
-$rquad = 0
-
-# Main loop
-
-queue = Rubygame::Queue.instance
-loop do
-  queue.get.each do |event|
-    case event
-      when Rubygame::QuitEvent
-        exit
-      #when Rubygame::KeyDownEvent
-      # case event.key
-      # when Rubygame::K_F1
-      #    FIXME Rubygame does not yet support fullscreen toggle inately
-    end
+    @angle_triangle = 0
+    @angle_quads = 0
   end
 
-  GL::Clear GL::COLOR_BUFFER_BIT|GL::DEPTH_BUFFER_BIT
+  def render_pyramid
+    GL::Begin GL::TRIANGLES
+          GL::Color 1,0,0
+          GL::Vertex  0, 1, 0
+          GL::Color 0,1,0
+          GL::Vertex -1,-1, 1
+          GL::Color 0,0,1
+          GL::Vertex  1,-1, 1
 
-  GL::LoadIdentity()
-  GL::Translate -1.5, 0, -6
-  GL::Rotate $rrti,0,1,0
+          GL::Color 1,0,0
+          GL::Vertex  0, 1, 0
+          GL::Color 0,0,1
+          GL::Vertex  1,-1, 1
+          GL::Color 0,1,0
+          GL::Vertex  1,-1,-1
 
-  GL::Begin GL::TRIANGLES
-        GL::Color 1,0,0
-        GL::Vertex  0, 1, 0
-        GL::Color 0,1,0
-        GL::Vertex -1,-1, 1
-        GL::Color 0,0,1
-        GL::Vertex  1,-1, 1
+          GL::Color 1,0,0
+          GL::Vertex  0, 1, 0
+          GL::Color 0,1,0
+          GL::Vertex  1,-1,-1
+          GL::Color 0,0,1
+          GL::Vertex -1,-1,-1
 
-        GL::Color 1,0,0
-        GL::Vertex  0, 1, 0
-        GL::Color 0,0,1
-        GL::Vertex  1,-1, 1
-        GL::Color 0,1,0
-        GL::Vertex  1,-1,-1
+          GL::Color 1,0,0
+          GL::Vertex  0, 1, 0
+          GL::Color 0,0,1
+          GL::Vertex -1,-1,-1
+          GL::Color 0,1,0
+          GL::Vertex -1,-1, 1
+    GL::End()
+  end
 
-        GL::Color 1,0,0
-        GL::Vertex  0, 1, 0
-        GL::Color 0,1,0
-        GL::Vertex  1,-1,-1
-        GL::Color 0,0,1
-        GL::Vertex -1,-1,-1
+  def render_cube
+    GL::Begin GL::QUADS
+          GL::Color 0,1,0
+          GL::Vertex  1, 1,-1
+          GL::Vertex -1, 1,-1
+          GL::Vertex -1, 1, 1
+          GL::Vertex  1, 1, 1
 
-        GL::Color 1,0,0
-        GL::Vertex  0, 1, 0
-        GL::Color 0,0,1
-        GL::Vertex -1,-1,-1
-        GL::Color 0,1,0
-        GL::Vertex -1,-1, 1
-  GL::End()
+          GL::Color 1,0.5,0
+          GL::Vertex  1,-1,-1
+          GL::Vertex -1,-1,-1
+          GL::Vertex -1,-1, 1
+          GL::Vertex  1,-1, 1
 
-  GL::LoadIdentity()
-  GL::Translate 1.5,0,-6
-  GL::Rotate $rquad,1,0,0
+          GL::Color 1,0,0
+          GL::Vertex  1, 1, 1
+          GL::Vertex -1, 1, 1
+          GL::Vertex -1,-1, 1
+          GL::Vertex  1,-1, 1
 
-  GL::Begin GL::QUADS
-        GL::Color 0,1,0
-        GL::Vertex  1, 1,-1
-        GL::Vertex -1, 1,-1
-        GL::Vertex -1, 1, 1
-        GL::Vertex  1, 1, 1
+          GL::Color 1,1,0
+          GL::Vertex  1, 1,-1
+          GL::Vertex -1, 1,-1
+          GL::Vertex -1,-1,-1
+          GL::Vertex  1,-1,-1
 
-        GL::Color 1,0.5,0
-        GL::Vertex  1,-1,-1
-        GL::Vertex -1,-1,-1
-        GL::Vertex -1,-1, 1
-        GL::Vertex  1,-1, 1
+          GL::Color 0,0,1
+          GL::Vertex -1, 1, 1
+          GL::Vertex -1, 1,-1
+          GL::Vertex -1,-1,-1
+          GL::Vertex -1,-1, 1
 
-        GL::Color 1,0,0
-        GL::Vertex  1, 1, 1
-        GL::Vertex -1, 1, 1
-        GL::Vertex -1,-1, 1
-        GL::Vertex  1,-1, 1
+          GL::Color 1,0,1
+          GL::Vertex  1, 1, 1
+          GL::Vertex  1, 1,-1
+          GL::Vertex  1,-1,-1
+          GL::Vertex  1,-1, 1
+    GL::End()
+  end
 
-        GL::Color 1,1,0
-        GL::Vertex  1, 1,-1
-        GL::Vertex -1, 1,-1
-        GL::Vertex -1,-1,-1
-        GL::Vertex  1,-1,-1
+  def render_objects
+    GL::Translate -1.5, 0, -6
 
-        GL::Color 0,0,1
-        GL::Vertex -1, 1, 1
-        GL::Vertex -1, 1,-1
-        GL::Vertex -1,-1,-1
-        GL::Vertex -1,-1, 1
+    GL::Rotate @angle_triangle,0,1,0
 
-        GL::Color 1,0,1
-        GL::Vertex  1, 1, 1
-        GL::Vertex  1, 1,-1
-        GL::Vertex  1,-1,-1
-        GL::Vertex  1,-1, 1
-  GL::End()
+    render_pyramid
 
-  $rrti += 0.2
-  $rquad += 0.15
+    GL::LoadIdentity()
+    GL::Translate 1.5,0,-6
 
-  Rubygame::GL.swap_buffers
+    GL::Rotate @angle_quads,1,0,0
+
+    render_cube
+
+    @angle_triangle += 0.2
+    @angle_quads += 0.15
+  end
+
 end
 
+Lesson05.new( 400, 300 ).run
