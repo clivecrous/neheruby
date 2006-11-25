@@ -40,6 +40,13 @@ class Display
     loop do
       queue.get.each do |event|
         case event
+          when Rubygame::KeyDownEvent
+            case event.key
+              when Rubygame::K_ESCAPE
+                exit
+              when Rubygame::K_Q
+                exit
+            end
           when Rubygame::QuitEvent
             exit
         end
