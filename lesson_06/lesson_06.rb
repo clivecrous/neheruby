@@ -6,8 +6,8 @@ require 'basecode/nehe'
 
 class Lesson06 < Display
 
-  def initialize width, height
-    super width, height, "Lesson 6"
+  def initialize flags=0, width=Display::WIDTH, height=Display::HEIGHT
+    super "Lesson 6", flags, width, height
 
     @xrot = 0
     @yrot = 0
@@ -114,4 +114,4 @@ class Lesson06 < Display
 
 end
 
-Lesson06.new( 400, 300 ).run
+Lesson06.new.run

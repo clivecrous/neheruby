@@ -5,14 +5,18 @@ require 'rubygame'
 require 'opengl'
 
 class Display
-  def initialize width, height, caption=""
+
+  WIDTH = 640
+  HEIGHT = 480
+
+  def initialize caption, flags=0, width=WIDTH, height=HEIGHT
     @width = width
     @height = height
 
     Rubygame.init
 
     @screen = Rubygame::Screen.set_mode [@width,@height], 32,
-      Rubygame::HWSURFACE|Rubygame::OPENGL
+      Rubygame::HWSURFACE|Rubygame::OPENGL|flags
 
     @screen.set_caption "NeHe Ruby - " + caption
 

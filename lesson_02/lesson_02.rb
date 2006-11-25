@@ -25,4 +25,4 @@ class Lesson02 < Display
   end
 end
 
-Lesson02.new( 400,300, "Lesson 2").run
+Lesson02.new( "Lesson 2" ).run

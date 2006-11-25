@@ -6,4 +6,4 @@ require 'opengl'
 
 require 'basecode/nehe'
 
-Display.new( 400,300, "Lesson 1" ).run
+Display.new( "Lesson 1" ).run

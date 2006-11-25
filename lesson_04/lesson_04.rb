@@ -5,8 +5,8 @@ require 'opengl'
 require 'basecode/nehe'
 
 class Lesson04 < Display
-  def initialize width, height
-    super width, height, "Lesson 4"
+  def initialize flags=0, width=640, height=480
+    super "Lesson 4", flags, width, height
 
     @angle_triangle = 0
     @angle_quads = 0
@@ -43,4 +43,4 @@ class Lesson04 < Display
   end
 end
 
-Lesson04.new( 400, 300 ).run
+Lesson04.new.run
