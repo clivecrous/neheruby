@@ -11,7 +11,9 @@ class Lesson07 < Display
 
     @xrot = 0
     @yrot = 0
-    @zrot = 0
+    @xrot_delta = 0
+    @yrot_delta = 0
+    @zoom=5.0
   end
 
   def gl_setup
@@ -25,7 +27,7 @@ class Lesson07 < Display
   end
 
   def loadGLtextures
-    texture = Rubygame::Image.load("data/nehe.bmp")
+    texture = Rubygame::Image.load("data/crate.bmp")
 
     @textures = GL::GenTextures 1
 
@@ -99,17 +101,37 @@ class Lesson07 < Display
   end
 
   def render_objects
-    GL::Translate 0, 0, -6
+    GL::Translate 0, 0, -@zoom
 
     GL::Rotate @xrot, 1, 0, 0
     GL::Rotate @yrot, 0, 1, 0
-    GL::Rotate @zrot, 0, 0, 1
 
     render_cube
 
-    @xrot += 0.3
-    @yrot += 0.2
-    @zrot += 0.4
+    @xrot += @xrot_delta
+    @yrot += @yrot_delta
+  end
+
+  def event_handler event
+    super
+
+    case event
+      when Rubygame::KeyDownEvent
+        case event.key
+          when Rubygame::K_DOWN
+            @xrot_delta+=0.1
+          when Rubygame::K_UP
+            @xrot_delta-=0.1
+          when Rubygame::K_RIGHT
+            @yrot_delta+=0.1
+          when Rubygame::K_LEFT
+            @yrot_delta-=0.1
+          when Rubygame::K_PAGEUP
+            @zoom-=0.1
+          when Rubygame::K_PAGEDOWN
+            @zoom+=0.1
+        end
+    end
   end
 
 end
