@@ -6,8 +6,8 @@ require 'opengl'
 
 class Display
 
-  WIDTH = 640
-  HEIGHT = 480
+  WIDTH = 800
+  HEIGHT = 600
 
   def initialize caption, flags=0, width=WIDTH, height=HEIGHT
     @width = width
@@ -35,22 +35,23 @@ class Display
     GL::Enable GL::DEPTH_TEST
     GL::DepthFunc GL::LESS
   end
+  def event_handler event
+    case event
+      when Rubygame::KeyDownEvent
+        case event.key
+          when Rubygame::K_ESCAPE
+            exit
+          when Rubygame::K_Q
+            exit
+        end
+      when Rubygame::QuitEvent
+        exit
+    end
+  end
   def run
     queue = Rubygame::Queue.instance
     loop do
-      queue.get.each do |event|
-        case event
-          when Rubygame::KeyDownEvent
-            case event.key
-              when Rubygame::K_ESCAPE
-                exit
-              when Rubygame::K_Q
-                exit
-            end
-          when Rubygame::QuitEvent
-            exit
-        end
-      end
+      queue.get.each { |event| event_handler event }
       render_scene
     end
   end
