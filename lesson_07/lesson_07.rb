@@ -4,10 +4,10 @@ require 'opengl'
 
 require 'basecode/nehe'
 
-class Lesson06 < Display
+class Lesson07 < Display
 
   def initialize flags=0, width=Display::WIDTH, height=Display::HEIGHT
-    super "Lesson 6", flags, width, height
+    super "Lesson 7", flags, width, height
 
     @xrot = 0
     @yrot = 0
@@ -114,4 +114,4 @@ class Lesson06 < Display
 
 end
 
-Lesson06.new.run
+Lesson07.new.run
