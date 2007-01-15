@@ -14,6 +14,10 @@ class Lesson07 < Display
     @xrot_delta = 0
     @yrot_delta = 0
     @zoom=5.0
+
+    @light = false
+
+    @lighting = {}
   end
 
   def gl_setup
@@ -23,6 +27,12 @@ class Lesson07 < Display
 
     GL::Enable GL::TEXTURE_2D
     GL::ShadeModel GL::SMOOTH
+
+    GL::Light GL::LIGHT1, GL::AMBIENT, [ 0.5, 0.5, 0.5, 1.0 ]
+    GL::Light GL::LIGHT1, GL::DIFFUSE, [ 1.0, 1.0, 1.0, 1.0 ]
+    GL::Light GL::LIGHT1, GL::POSITION, [ 0.0, 0,0, 2.0, 1.0 ]
+
+    GL::Enable GL::LIGHT1
 
   end
 
@@ -44,6 +54,7 @@ class Lesson07 < Display
     GL::BindTexture GL::TEXTURE_2D, @textures[0]
 
     GL::Begin GL::QUADS
+          GL::Normal 0,0,1
           GL::TexCoord 0, 1
           GL::Vertex -1,-1, 1
           GL::TexCoord 1, 1
@@ -53,6 +64,7 @@ class Lesson07 < Display
           GL::TexCoord 0, 0
           GL::Vertex -1, 1, 1
 
+          GL::Normal 0,0,-1
           GL::TexCoord 0, 0
           GL::Vertex -1,-1,-1
           GL::TexCoord 0, 1
@@ -61,7 +73,8 @@ class Lesson07 < Display
           GL::Vertex  1, 1,-1
           GL::TexCoord 1, 0
           GL::Vertex  1,-1,-1
-
+          
+          GL::Normal 0,1,0
           GL::TexCoord 1, 1
           GL::Vertex -1, 1,-1
           GL::TexCoord 1, 0
@@ -71,6 +84,7 @@ class Lesson07 < Display
           GL::TexCoord 0, 1
           GL::Vertex  1, 1,-1
 
+          GL::Normal 0,-1,0
           GL::TexCoord 0, 1
           GL::Vertex -1,-1,-1
           GL::TexCoord 1, 1
@@ -80,6 +94,7 @@ class Lesson07 < Display
           GL::TexCoord 0, 0
           GL::Vertex -1,-1, 1
 
+          GL::Normal 1,0,0
           GL::TexCoord 0, 0
           GL::Vertex  1,-1,-1
           GL::TexCoord 0, 1
@@ -89,6 +104,7 @@ class Lesson07 < Display
           GL::TexCoord 1, 0
           GL::Vertex  1,-1, 1
 
+          GL::Normal -1,0,0
           GL::TexCoord 1, 0
           GL::Vertex -1,-1,-1
           GL::TexCoord 0, 0
@@ -130,6 +146,13 @@ class Lesson07 < Display
             @zoom-=0.1
           when Rubygame::K_PAGEDOWN
             @zoom+=0.1
+          when Rubygame::K_L
+            @light = !@light
+            if @light
+              GL::Enable GL::LIGHTING
+            else
+              GL::Disable GL::LIGHTING
+            end
         end
     end
   end
