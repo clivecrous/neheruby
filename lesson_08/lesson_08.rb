@@ -4,7 +4,7 @@ require 'opengl'
 
 require 'basecode/nehe'
 
-class Lesson07 < Display
+class Lesson08 < Display
 
   def initialize flags=0, width=Display::WIDTH, height=Display::HEIGHT
     super "Lesson 7", flags, width, height
@@ -37,7 +37,7 @@ class Lesson07 < Display
   end
 
   def loadGLtextures
-    texture = Rubygame::Image.load("data/crate.bmp")
+    texture = Rubygame::Image.load("data/glass.bmp")
 
     @textures = GL::GenTextures 3
 
@@ -178,4 +178,4 @@ class Lesson07 < Display
 
 end
 
-Lesson07.new.run
+Lesson08.new.run
