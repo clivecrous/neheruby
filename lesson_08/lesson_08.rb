@@ -18,6 +18,7 @@ class Lesson08 < Display
     @filter = 0
 
     @light = false
+    @blend = false
   end
 
   def gl_setup
@@ -33,6 +34,10 @@ class Lesson08 < Display
     GL::Light GL::LIGHT1, GL::POSITION, [ 0.0, 0,0, 2.0, 1.0 ]
 
     GL::Enable GL::LIGHT1
+
+    GL::Color [1,1,1,0.5]
+
+    GL::BlendFunc GL::SRC_ALPHA, GL::ONE
 
   end
 
@@ -172,6 +177,15 @@ class Lesson08 < Display
             end
           when Rubygame::K_F
             @filter = ( @filter + 1) % 3
+          when Rubygame::K_B
+            @blend = !@blend
+            if @blend
+              GL::Enable GL::BLEND
+              GL::Disable GL::DEPTH_TEST
+            else
+              GL::Disable GL::BLEND
+              GL::Enable GL::DEPTH_TEST
+            end
         end
     end
   end
