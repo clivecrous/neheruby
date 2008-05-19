@@ -18,7 +18,7 @@ class Display
     @screen = Rubygame::Screen.set_mode [@width,@height], 32,
       Rubygame::HWSURFACE|Rubygame::OPENGL|flags
 
-    @screen.set_caption "NeHe Ruby - " + caption
+    @screen.title = "NeHe Ruby - " + caption
 
     gl_setup
   end
@@ -49,9 +49,9 @@ class Display
     end
   end
   def run
-    queue = Rubygame::Queue.instance
+    queue = Rubygame::EventQueue.new
     loop do
-      queue.get.each { |event| event_handler event }
+      queue.each { |event| event_handler event }
       render_scene
     end
   end
